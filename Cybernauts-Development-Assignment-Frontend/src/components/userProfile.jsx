@@ -9,7 +9,7 @@ const UserProfile = ({ data, setUserList, setModal, userList ,setUser}) => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/api/users/${id}`);
+            const response = await axios.delete(`https://cybernauts-development-assignment-nfhn.onrender.com/${id}`);
             toast.success(response.data.message);
             setUserList((prev) => prev.filter((user) => user._id !== id));
         } catch (error) {

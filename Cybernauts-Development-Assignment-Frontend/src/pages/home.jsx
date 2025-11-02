@@ -37,7 +37,7 @@ const Home = () => {
 
         try {
             // Send POST request to backend
-            const { data } = await axios.post("http://localhost:5000/api/users/", {
+            const { data } = await axios.post("https://cybernauts-development-assignment-nfhn.onrender.com/", {
                 name,
                 age,
                 hobbies
@@ -70,7 +70,7 @@ const Home = () => {
 
     useEffect(() => {
         const handleFetch = async () => {
-            const data = await axios.get("http://localhost:5000/api/users/");
+            const data = await axios.get("https://cybernauts-development-assignment-nfhn.onrender.com/");
             setUserList(data.data.users)
         }
         handleFetch();
@@ -79,7 +79,7 @@ const Home = () => {
     const handleUpdateUser = async () => {
         const { _id, name, age, hobbies } = user;
         try {
-            const { data } = await axios.put(`http://localhost:5000/api/users/${_id}`, {
+            const { data } = await axios.put(`https://cybernauts-development-assignment-nfhn.onrender.com/${_id}`, {
                 name, age, hobbies
             });
 

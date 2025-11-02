@@ -13,11 +13,10 @@ import "reactflow/dist/style.css";
 const UserGraph = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
   // Fetch graph from backend
   const fetchGraph = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/users/graph");
+      const response = await axios.get("https://cybernauts-development-assignment-nfhn.onrender.com/graph");
       const users = response.data.users;
 
       // Create nodes
@@ -71,7 +70,7 @@ const UserGraph = () => {
     setEdges((eds) => addEdge(params, eds));
 
     try {
-      await axios.post("http://localhost:5000/api/users/relationship", {
+      await axios.post("https://cybernauts-development-assignment-nfhn.onrender.com/relationship", {
         userId: params.source,
         friendId: params.target,
       });
