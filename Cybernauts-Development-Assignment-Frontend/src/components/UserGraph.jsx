@@ -16,7 +16,7 @@ const UserGraph = () => {
   // Fetch graph from backend
   const fetchGraph = async () => {
     try {
-      const response = await axios.get("https://cybernauts-development-assignment-nfhn.onrender.com/graph");
+      const response = await axios.get("https://cybernauts-development-assignment-nfhn.onrender.com/api/users/graph");
       const users = response.data.users;
 
       // Create nodes
@@ -70,7 +70,7 @@ const UserGraph = () => {
     setEdges((eds) => addEdge(params, eds));
 
     try {
-      await axios.post("https://cybernauts-development-assignment-nfhn.onrender.com/relationship", {
+      await axios.post("https://cybernauts-development-assignment-nfhn.onrender.com/api/users/relationship", {
         userId: params.source,
         friendId: params.target,
       });
