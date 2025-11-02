@@ -1,14 +1,33 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+dotenv.config(); // move this up so MONGO_URI loads before using it
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+// Enable CORS for both local + Vercel frontend
+app.use(
+  cors({
+    origin: [
+      "https://cybernauts-development-assignment-snowy.vercel.app",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 // ======= MongoDB Connection =======
-const MONGO_URL = "mongodb://127.0.0.1:27017/cybernauts";
-mongoose.connect(MONGO_URL)
+const MONGO_URL = process.env.MONGO_URI;
+
+mongoose
+  .connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("DB connection failed:", err));
 
@@ -24,7 +43,7 @@ const User = mongoose.model("User", userSchema);
 
 // ======= Routes =======
 
-//  Create User
+// 🧍‍♂️ Create User
 app.post("/api/users", async (req, res) => {
   try {
     const { name, age, hobbies } = req.body;
@@ -39,7 +58,7 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-// 📄 Get All Users
+// 📋 Get All Users
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find().populate("friends", "name age");
@@ -84,7 +103,8 @@ app.post("/api/users/relationship", async (req, res) => {
 
     const user = await User.findById(userId);
     const friend = await User.findById(friendId);
-    if (!user || !friend) return res.status(404).json({ message: "User not found" });
+    if (!user || !friend)
+      return res.status(404).json({ message: "User not found" });
 
     if (!user.friends.includes(friendId)) user.friends.push(friendId);
     if (!friend.friends.includes(userId)) friend.friends.push(userId);
@@ -101,7 +121,7 @@ app.post("/api/users/relationship", async (req, res) => {
 // 🕸️ Get Graph Data
 app.get("/api/users/graph", async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("friends", "name age");
     res.json({ users });
   } catch (err) {
     res.status(500).json({ message: "Error fetching graph data", error: err.message });
@@ -109,5 +129,5 @@ app.get("/api/users/graph", async (req, res) => {
 });
 
 // ======= Start Server =======
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
