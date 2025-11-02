@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+
+.MainUserBox::-webkit-scrollbar{
+    display: none;
+}
