@@ -103,11 +103,11 @@ GET	/api/users/graph	Fetch graph data for visualization
 
 🪄 How to Create Relationships
 
-Open the app in browser.
+-> Open the app in browser.
 
-Use the Add User button to add multiple users.
+-> Use the Add User button to add multiple users.
 
-In the graph section, connect two nodes manually — it automatically updates backend.
+-> In the graph section, connect two nodes manually — it automatically updates backend.
 
 💾 Database
 
@@ -118,13 +118,11 @@ users (stores name, age, hobbies, friends)
 
 💡 Future Improvements
 
-Add JWT login system
+-> Add JWT login system
 
-Add search & filter for graph
+-> Add search & filter for graph
 
-Deploy backend on Render / Railway
-
-Host frontend on Vercel
+-> Deploy backend on Render
 
 👨‍💻 Developer
 
